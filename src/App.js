@@ -101,6 +101,7 @@ class App extends Component {
         return (
             <div className="App container">
                 <h2>To Do List</h2>
+                <h1>test</h1>
 
                 <Button className="my-3" color="primary" onClick={this.toggleNewTaskModal.bind(this)}>Add Task</Button>
 
