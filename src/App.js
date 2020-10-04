@@ -14,10 +14,16 @@ class App extends Component {
             editTaskData: {
                 id: null,
                 text: '',
-                checked: null
+                checked: true
+            },
+            viewTaskData: {
+                id: null,
+                text: '',
+                checked: false
             },
             newTaskModal: false,
-            editTaskModal: false
+            editTaskModal: false,
+            viewTaskModal: false
         }
     }
 
@@ -37,6 +43,12 @@ class App extends Component {
     toggleEditTaskModal() {
         this.setState({
             editTaskModal: !this.state.editTaskModal
+        });
+    }
+
+    toggleViewTaskModal() {
+        this.setState({
+            viewTaskModal: !this.state.viewTaskModal
         });
     }
 
@@ -60,6 +72,12 @@ class App extends Component {
             this.setState({
                 editTaskModal: false, editTaskData: { id: null, text: '', checked: null }
             })
+        });
+    }
+
+    viewTask(id, text, checked) {
+        this.setState({
+            viewTaskData: { id, text, checked }, viewTaskModal: !this.state.viewTaskModal
         });
     }
 
@@ -91,6 +109,7 @@ class App extends Component {
                     <td>{task.text}</td>
                     <td>{task.checked.toString()}</td>
                     <td>
+                        <Button color="primary" size="sm" className="mr-2" onClick={this.viewTask.bind(this, task.id, task.text, task.checked)}>View</Button>
                         <Button color="warning" size="sm" className="mr-2" onClick={this.editTask.bind(this, task.id, task.text, task.checked)}>Edit</Button>
                         <Button color="danger" size="sm" onClick={this.deleteTask.bind(this, task.id)}>Delete</Button>
                     </td>
@@ -101,9 +120,8 @@ class App extends Component {
         return (
             <div className="App container">
                 <h2>To Do List</h2>
-                <h1>test</h1>
 
-                <Button className="my-3" color="primary" onClick={this.toggleNewTaskModal.bind(this)}>Add Task</Button>
+                <Button className="my-3" color="success" onClick={this.toggleNewTaskModal.bind(this)}>Add Task</Button>
 
                 <Modal isOpen={this.state.newTaskModal} toggle={this.toggleNewTaskModal.bind(this)}>
                     <ModalHeader toggle={this.toggleNewTaskModal.bind(this)}>Add a new task</ModalHeader>
@@ -138,6 +156,31 @@ class App extends Component {
                     <ModalFooter>
                         <Button color="primary" onClick={this.updateTask.bind(this)}>Edit Task</Button>{' '}
                         <Button color="secondary" onClick={this.toggleEditTaskModal.bind(this)}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.viewTaskModal} toggle={this.toggleViewTaskModal.bind(this)}>
+                    <ModalHeader toggle={this.toggleViewTaskModal.bind(this)}>View a task</ModalHeader>
+                    <ModalBody>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Text</th>
+                                    <th>Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{this.state.viewTaskData.id}</td>
+                                    <td>{this.state.viewTaskData.text}</td>
+                                    <td>{this.state.viewTaskData.checked.toString()}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={this.toggleViewTaskModal.bind(this)}>Close</Button>
                     </ModalFooter>
                 </Modal>
 
