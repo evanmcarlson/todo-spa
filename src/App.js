@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+import GoogleBtn from './GoogleBtn';
 
 class App extends Component {
     constructor(props) {
@@ -119,8 +120,10 @@ class App extends Component {
 
         return (
             <div className="App container">
-                <h2>To Do List</h2>
 
+                <GoogleBtn/>
+
+                <h2>To Do List</h2>
                 <Button className="my-3" color="success" onClick={this.toggleNewTaskModal.bind(this)}>Add Task</Button>
 
                 <Modal isOpen={this.state.newTaskModal} toggle={this.toggleNewTaskModal.bind(this)}>
